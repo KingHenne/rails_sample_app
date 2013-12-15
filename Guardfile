@@ -35,6 +35,12 @@ guard 'rspec', all_after_pass: false, cli: '--drb' do
    watch(%r{^app/controllers/sessions_controller\.rb$}) do |m|
      "spec/requests/authentication_pages_spec.rb"
    end
+
+   # Helpers
+   watch(%r{^app/helpers/(.+)_helper.rb$}) do |m|
+     (m[1][/application/] ? "spec/requests" :
+                            "spec/requests/#{m[1]}_spec.rb")
+   end
 end
 
 
