@@ -44,8 +44,14 @@ guard 'rspec', all_after_pass: false, cli: '--drb' do
 
    # Helpers
    watch(%r{^app/helpers/(.+)_helper.rb$}) do |m|
-     (m[1][/application/] ? "spec/requests" :
-                            "spec/requests/#{m[1]}_spec.rb")
+     case m[1]
+       when /application/
+         "spec/requests"
+       when /sessions/
+         "spec/requests/authentication_pages_spec.rb"
+       else
+         "spec/requests/#{m[1]}_spec.rb"
+     end
    end
 end
 
