@@ -29,8 +29,14 @@ guard 'rspec', all_after_pass: false, cli: '--drb' do
                         "spec/requests/#{m[1].singularize}_pages_spec.rb")]
    end
    watch(%r{^app/views/(.+)/}) do |m|
-     (m[1][/_pages/] ? "spec/requests/#{m[1]}_spec.rb" :
-                       "spec/requests/#{m[1].singularize}_pages_spec.rb")
+     case m[1]
+       when /^layouts/
+         "spec/requests"
+       when /_pages/
+         "spec/requests/#{m[1]}_spec.rb"
+       else
+         "spec/requests/#{m[1].singularize}_pages_spec.rb"
+     end
    end
    watch(%r{^app/controllers/sessions_controller\.rb$}) do |m|
      "spec/requests/authentication_pages_spec.rb"
