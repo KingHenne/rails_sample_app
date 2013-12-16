@@ -1,4 +1,5 @@
 @import "bootstrap";
+@import "helpers";
 
 /* universal */
 
@@ -43,7 +44,7 @@ p {
   line-height: 1.7em;
   &.lead {
     color: #555;
-    -webkit-font-smoothing: antialiased;
+    @include antialiased;
   }
 }
 
@@ -89,4 +90,14 @@ footer {
       margin-left: 10px;
     }
   }
+}
+
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
 }
