@@ -56,4 +56,13 @@ describe User do
     it { should_not be_valid }
   end
 
+  describe "when saving an email address with uppercase letters" do
+    before do
+      @user.email = "TEST@example.com"
+      @user.save
+    end
+
+    it { expect(@user.email).to eq("test@example.com") }
+  end
+
 end
