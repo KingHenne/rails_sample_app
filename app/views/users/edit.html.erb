@@ -3,8 +3,7 @@
 
 <div class="row">
   <div class="span6 offset3">
-    <% provide(:submit_label, 'Save changes') %>
-    <%= render 'shared/user_form' %>
+    <%= render 'user_form', submit_label: 'Save changes' %>
 
     <%= gravatar_for @user %>
     <a href="http://gravatar.com/emails">change</a>
