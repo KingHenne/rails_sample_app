@@ -124,5 +124,14 @@ describe "UserPages" do
       specify { expect(user.reload.name).to  eq new_name }
       specify { expect(user.reload.email).to eq new_email }
     end
+
+    describe "submitting an invalid PATCH request to the Users#update action" do
+      let(:bad_user) { FactoryGirl.create(:user) }
+      before do
+        bad_user.admin = true
+        patch user_path(bad_user)
+      end
+      specify { expect(bad_user.reload).not_to be_admin }
+    end
   end
 end
