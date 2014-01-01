@@ -155,4 +155,25 @@ describe "UserPages" do
       specify { expect(bad_user.reload).not_to be_admin }
     end
   end
+
+  describe "delete" do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:admin) { FactoryGirl.create(:admin) }
+
+    before { sign_in admin, no_capybara: true }
+
+    describe "submitting a DELETE request to the Users#destroy action" do
+      it "should reduce the User count by 1" do
+        expect { delete user_path(user) }.to change(User, :count).by(-1)
+      end
+
+      describe "for a user with microposts" do
+        let!(:micropost) { FactoryGirl.create(:micropost, user: user, content: "Foo") }
+        before { delete user_path(user) }
+        it "should also destroy all microposts of the user" do
+          expect(user.microposts.reload).to be_empty
+        end
+      end
+    end
+  end
 end
